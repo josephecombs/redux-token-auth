@@ -6,7 +6,7 @@ import ReduxState from './types'
 import RequireSignInWrapper from './types'
 
 const generateRequireSignInWrapper = (
-  { redirectPathIfNotSignedIn, setPostLoginRedirectPath }: GenerateRequireSignInWrapperConfig
+  { redirectPathIfNotSignedIn }: GenerateRequireSignInWrapperConfig
 ): RequireSignInWrapper => {
   const requireSignInWrapper = (PageComponent: ComponentClass): ComponentClass => {
     interface WrapperProps {
@@ -30,9 +30,6 @@ const generateRequireSignInWrapper = (
           isSignedIn,
         } = nextProps
         if (hasVerificationBeenAttempted && !isSignedIn) {
-          try {
-            setPostLoginRedirectPath(window.location.pathname)
-          } catch(err) {}
           history.replace(redirectPathIfNotSignedIn)
         }
 

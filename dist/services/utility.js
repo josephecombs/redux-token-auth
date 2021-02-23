@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.invertMapKeysAndValues = function (stringMap) {
+exports.invertMapKeysAndValues = void 0;
+var invertMapKeysAndValues = function (stringMap) {
     var newStringMap = {};
     for (var key in stringMap) {
         var val = stringMap[key];
@@ -8,4 +9,5 @@ exports.invertMapKeysAndValues = function (stringMap) {
     }
     return newStringMap;
 };
+exports.invertMapKeysAndValues = invertMapKeysAndValues;
 //# sourceMappingURL=utility.js.map

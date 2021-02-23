@@ -18,7 +18,7 @@ const generateRequireSignInWrapper = (
     }
 
     class GatedPage extends React.Component<WrapperProps> {
-      public componentWillReceiveProps(nextProps: WrapperProps): void {
+      public getDerivedStateFromProps(nextProps: WrapperProps): void {
         const {
           history,
           hasVerificationBeenAttempted,

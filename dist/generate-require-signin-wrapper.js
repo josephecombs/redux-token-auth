@@ -23,7 +23,7 @@ var generateRequireSignInWrapper = function (_a) {
             function GatedPage() {
                 return _super !== null && _super.apply(this, arguments) || this;
             }
-            GatedPage.prototype.componentWillReceiveProps = function (nextProps) {
+            GatedPage.prototype.getDerivedStateFromProps = function (nextProps) {
                 var history = nextProps.history, hasVerificationBeenAttempted = nextProps.hasVerificationBeenAttempted, isSignedIn = nextProps.isSignedIn;
                 console.log("in UNSAFE_componentWillReceiveProps", hasVerificationBeenAttempted, isSignedIn);
                 if (hasVerificationBeenAttempted && !isSignedIn) {

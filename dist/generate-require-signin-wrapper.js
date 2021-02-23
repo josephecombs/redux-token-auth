@@ -20,8 +20,10 @@ var generateRequireSignInWrapper = function (_a) {
     var requireSignInWrapper = function (PageComponent) {
         var GatedPage = /** @class */ (function (_super) {
             __extends(GatedPage, _super);
-            function GatedPage() {
-                return _super !== null && _super.apply(this, arguments) || this;
+            function GatedPage(props) {
+                var _this = _super.call(this, props) || this;
+                _this.state = {};
+                return _this;
             }
             GatedPage.getDerivedStateFromProps = function (nextProps) {
                 var history = nextProps.history, hasVerificationBeenAttempted = nextProps.hasVerificationBeenAttempted, isSignedIn = nextProps.isSignedIn;

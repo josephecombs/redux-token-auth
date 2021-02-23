@@ -17,7 +17,13 @@ const generateRequireSignInWrapper = (
       }
     }
 
+
     class GatedPage extends React.Component<WrapperProps> {
+      constructor(props: any): void {
+        super(props);
+        this.state = {}
+      }
+
       static getDerivedStateFromProps(nextProps: WrapperProps): null {
         const {
           history,

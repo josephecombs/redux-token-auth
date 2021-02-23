@@ -40,7 +40,7 @@ const generateRequireSignInWrapper = (
         // <PageComponent {...this.props} />
         React.createElement(PageComponent.type, Object.assign({}, this.props))
           :
-          window.location.pathname = redirectPathIfNotSignedIn;
+          history.pushState(null, '', redirectPathIfNotSignedIn);    
       }
     }
 

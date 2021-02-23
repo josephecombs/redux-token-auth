@@ -1,9 +1,10 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -34,8 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.setHasVerificationBeenAttempted = exports.signOutRequestFailed = exports.signOutRequestSucceeded = exports.signOutRequestSent = exports.signInRequestFailed = exports.signInRequestSucceeded = exports.signInRequestSent = exports.verifyTokenRequestFailed = exports.verifyTokenRequestSucceeded = exports.verifyTokenRequestSent = exports.registrationRequestFailed = exports.registrationRequestSucceeded = exports.registrationRequestSent = void 0;
 var axios_1 = require("axios");
 var types_1 = require("./types");
 var AsyncLocalStorage_1 = require("./AsyncLocalStorage");
@@ -43,57 +44,70 @@ var auth_1 = require("./services/auth");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Pure Redux actions:
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-exports.registrationRequestSent = function () { return ({
+var registrationRequestSent = function () { return ({
     type: types_1.REGISTRATION_REQUEST_SENT,
 }); };
-exports.registrationRequestSucceeded = function (userAttributes) { return ({
+exports.registrationRequestSent = registrationRequestSent;
+var registrationRequestSucceeded = function (userAttributes) { return ({
     type: types_1.REGISTRATION_REQUEST_SUCCEEDED,
     payload: {
         userAttributes: userAttributes,
     },
 }); };
-exports.registrationRequestFailed = function () { return ({
+exports.registrationRequestSucceeded = registrationRequestSucceeded;
+var registrationRequestFailed = function () { return ({
     type: types_1.REGISTRATION_REQUEST_FAILED,
 }); };
-exports.verifyTokenRequestSent = function () { return ({
+exports.registrationRequestFailed = registrationRequestFailed;
+var verifyTokenRequestSent = function () { return ({
     type: types_1.VERIFY_TOKEN_REQUEST_SENT,
 }); };
-exports.verifyTokenRequestSucceeded = function (userAttributes) { return ({
+exports.verifyTokenRequestSent = verifyTokenRequestSent;
+var verifyTokenRequestSucceeded = function (userAttributes) { return ({
     type: types_1.VERIFY_TOKEN_REQUEST_SUCCEEDED,
     payload: {
         userAttributes: userAttributes,
     },
 }); };
-exports.verifyTokenRequestFailed = function () { return ({
+exports.verifyTokenRequestSucceeded = verifyTokenRequestSucceeded;
+var verifyTokenRequestFailed = function () { return ({
     type: types_1.VERIFY_TOKEN_REQUEST_FAILED,
 }); };
-exports.signInRequestSent = function () { return ({
+exports.verifyTokenRequestFailed = verifyTokenRequestFailed;
+var signInRequestSent = function () { return ({
     type: types_1.SIGNIN_REQUEST_SENT,
 }); };
-exports.signInRequestSucceeded = function (userAttributes) { return ({
+exports.signInRequestSent = signInRequestSent;
+var signInRequestSucceeded = function (userAttributes) { return ({
     type: types_1.SIGNIN_REQUEST_SUCCEEDED,
     payload: {
         userAttributes: userAttributes,
     },
 }); };
-exports.signInRequestFailed = function () { return ({
+exports.signInRequestSucceeded = signInRequestSucceeded;
+var signInRequestFailed = function () { return ({
     type: types_1.SIGNIN_REQUEST_FAILED,
 }); };
-exports.signOutRequestSent = function () { return ({
+exports.signInRequestFailed = signInRequestFailed;
+var signOutRequestSent = function () { return ({
     type: types_1.SIGNOUT_REQUEST_SENT,
 }); };
-exports.signOutRequestSucceeded = function () { return ({
+exports.signOutRequestSent = signOutRequestSent;
+var signOutRequestSucceeded = function () { return ({
     type: types_1.SIGNOUT_REQUEST_SUCCEEDED,
 }); };
-exports.signOutRequestFailed = function () { return ({
+exports.signOutRequestSucceeded = signOutRequestSucceeded;
+var signOutRequestFailed = function () { return ({
     type: types_1.SIGNOUT_REQUEST_FAILED,
 }); };
-exports.setHasVerificationBeenAttempted = function (hasVerificationBeenAttempted) { return ({
+exports.signOutRequestFailed = signOutRequestFailed;
+var setHasVerificationBeenAttempted = function (hasVerificationBeenAttempted) { return ({
     type: types_1.SET_HAS_VERIFICATION_BEEN_ATTEMPTED,
     payload: {
         hasVerificationBeenAttempted: hasVerificationBeenAttempted,
     },
 }); };
+exports.setHasVerificationBeenAttempted = setHasVerificationBeenAttempted;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Async Redux Thunk actions:
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -238,22 +252,23 @@ var generateAuthActions = function (config) {
     }; };
     var signOutUser = function () { return function (dispatch) {
         return __awaiter(this, void 0, void 0, function () {
-            var userSignOutCredentials, _a, _b, error_4;
+            var userSignOutCredentials, _a, error_4;
+            var _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        _a = {};
-                        _b = 'access-token';
+                        _b = {};
+                        _a = 'access-token';
                         return [4 /*yield*/, Storage.getItem(localStorageKeysPrefix + "access-token")];
                     case 1:
-                        _a[_b] = (_c.sent());
+                        _b[_a] = (_c.sent());
                         return [4 /*yield*/, Storage.getItem(localStorageKeysPrefix + "client")];
                     case 2:
-                        _a.client = (_c.sent());
+                        _b.client = (_c.sent());
                         return [4 /*yield*/, Storage.getItem(localStorageKeysPrefix + "uid")];
                     case 3:
-                        userSignOutCredentials = (_a.uid = (_c.sent()),
-                            _a);
+                        userSignOutCredentials = (_b.uid = (_c.sent()),
+                            _b);
                         dispatch(exports.signOutRequestSent());
                         _c.label = 4;
                     case 4:
@@ -279,25 +294,26 @@ var generateAuthActions = function (config) {
             });
         });
     }; };
-    var verifyCredentials = function (store) { return __awaiter(_this, void 0, void 0, function () {
-        var verificationParams, _a, _b;
+    var verifyCredentials = function (store) { return __awaiter(void 0, void 0, void 0, function () {
+        var verificationParams, _a;
+        var _b;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0: return [4 /*yield*/, Storage.getItem(localStorageKeysPrefix + "access-token")];
                 case 1:
                     if (!_c.sent()) return [3 /*break*/, 5];
-                    _a = {};
-                    _b = 'access-token';
+                    _b = {};
+                    _a = 'access-token';
                     return [4 /*yield*/, Storage.getItem(localStorageKeysPrefix + "access-token")];
                 case 2:
-                    _a[_b] = (_c.sent());
+                    _b[_a] = (_c.sent());
                     return [4 /*yield*/, Storage.getItem(localStorageKeysPrefix + "client")];
                 case 3:
-                    _a.client = (_c.sent());
+                    _b.client = (_c.sent());
                     return [4 /*yield*/, Storage.getItem(localStorageKeysPrefix + "uid")];
                 case 4:
-                    verificationParams = (_a.uid = (_c.sent()),
-                        _a);
+                    verificationParams = (_b.uid = (_c.sent()),
+                        _b);
                     store.dispatch(verifyToken(verificationParams));
                     return [3 /*break*/, 6];
                 case 5:

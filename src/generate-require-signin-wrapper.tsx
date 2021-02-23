@@ -24,6 +24,7 @@ const generateRequireSignInWrapper = (
           hasVerificationBeenAttempted,
           isSignedIn,
         } = nextProps
+        console.log(history, hasVerificationBeenAttempted, isSignedIn)
         if (hasVerificationBeenAttempted && !isSignedIn) {
           history.replace(redirectPathIfNotSignedIn)
         }

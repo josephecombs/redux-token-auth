@@ -1,9 +1,10 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -34,8 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getUserAttributesFromResponse = exports.deleteAuthHeadersFromDeviceStorage = exports.deleteAuthHeaders = exports.persistAuthHeadersInDeviceStorage = exports.setAuthHeaders = void 0;
 var axios_1 = require("axios");
 var utility_1 = require("./utility");
 var authHeaderKeys = [
@@ -45,22 +46,25 @@ var authHeaderKeys = [
     'expiry',
     'uid',
 ];
-exports.setAuthHeaders = function (headers) {
+var setAuthHeaders = function (headers) {
     authHeaderKeys.forEach(function (key) {
         axios_1.default.defaults.headers.common[key] = headers[key];
     });
 };
-exports.persistAuthHeadersInDeviceStorage = function (Storage, headers, localStorageKeysPrefix) {
+exports.setAuthHeaders = setAuthHeaders;
+var persistAuthHeadersInDeviceStorage = function (Storage, headers, localStorageKeysPrefix) {
     authHeaderKeys.forEach(function (key) {
         Storage.setItem("" + localStorageKeysPrefix + key, headers[key]);
     });
 };
-exports.deleteAuthHeaders = function () {
+exports.persistAuthHeadersInDeviceStorage = persistAuthHeadersInDeviceStorage;
+var deleteAuthHeaders = function () {
     authHeaderKeys.forEach(function (key) {
         delete axios_1.default.defaults.headers.common[key];
     });
 };
-exports.deleteAuthHeadersFromDeviceStorage = function (Storage, localStorageKeysPrefix) { return __awaiter(_this, void 0, void 0, function () {
+exports.deleteAuthHeaders = deleteAuthHeaders;
+var deleteAuthHeadersFromDeviceStorage = function (Storage, localStorageKeysPrefix) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         authHeaderKeys.forEach(function (key) {
             Storage.removeItem("" + localStorageKeysPrefix + key);
@@ -68,7 +72,8 @@ exports.deleteAuthHeadersFromDeviceStorage = function (Storage, localStorageKeys
         return [2 /*return*/];
     });
 }); };
-exports.getUserAttributesFromResponse = function (userAttributes, response) {
+exports.deleteAuthHeadersFromDeviceStorage = deleteAuthHeadersFromDeviceStorage;
+var getUserAttributesFromResponse = function (userAttributes, response) {
     var invertedUserAttributes = utility_1.invertMapKeysAndValues(userAttributes);
     var userAttributesBackendKeys = Object.keys(invertedUserAttributes);
     var userAttributesToReturn = {};
@@ -79,4 +84,5 @@ exports.getUserAttributesFromResponse = function (userAttributes, response) {
     });
     return userAttributesToReturn;
 };
+exports.getUserAttributesFromResponse = getUserAttributesFromResponse;
 //# sourceMappingURL=auth.js.map

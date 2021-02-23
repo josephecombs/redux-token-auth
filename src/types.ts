@@ -199,6 +199,7 @@ export interface SingleLayerStringMap {
 
 export default interface GenerateRequireSignInWrapperConfig {
   readonly redirectPathIfNotSignedIn: string
+  readonly setPostLoginRedirectPath: Function
 }
 
 export type RequireSignInWrapper = (PageComponent: ComponentClass) => ComponentClass

@@ -16,7 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_redux_1 = require("react-redux");
 var generateRequireSignInWrapper = function (_a) {
-    var redirectPathIfNotSignedIn = _a.redirectPathIfNotSignedIn, setPostLoginRedirectPath = _a.setPostLoginRedirectPath;
+    var redirectPathIfNotSignedIn = _a.redirectPathIfNotSignedIn;
     var requireSignInWrapper = function (PageComponent) {
         var GatedPage = /** @class */ (function (_super) {
             __extends(GatedPage, _super);
@@ -28,10 +28,6 @@ var generateRequireSignInWrapper = function (_a) {
             GatedPage.getDerivedStateFromProps = function (nextProps) {
                 var history = nextProps.history, hasVerificationBeenAttempted = nextProps.hasVerificationBeenAttempted, isSignedIn = nextProps.isSignedIn;
                 if (hasVerificationBeenAttempted && !isSignedIn) {
-                    try {
-                        setPostLoginRedirectPath(window.location.pathname);
-                    }
-                    catch (err) { }
                     history.replace(redirectPathIfNotSignedIn);
                 }
                 return null;

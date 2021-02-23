@@ -24,7 +24,7 @@ const generateRequireSignInWrapper = (
           hasVerificationBeenAttempted,
           isSignedIn,
         } = nextProps
-        // console.log("in UNSAFE_componentWillReceiveProps", hasVerificationBeenAttempted, isSignedIn)
+        console.log("in UNSAFE_componentWillReceiveProps", hasVerificationBeenAttempted, isSignedIn)
         if (hasVerificationBeenAttempted && !isSignedIn) {
           history.replace(redirectPathIfNotSignedIn)
         }
@@ -32,7 +32,6 @@ const generateRequireSignInWrapper = (
 
       public render (): JSX.Element {
         const {
-          history,
           hasVerificationBeenAttempted,
           isSignedIn,
         } = this.props
@@ -41,7 +40,7 @@ const generateRequireSignInWrapper = (
         // <PageComponent {...this.props} />
         React.createElement(PageComponent.type, Object.assign({}, this.props))
           :
-          history.replace(redirectPathIfNotSignedIn);    
+          <div></div>;    
       }
     }
 
